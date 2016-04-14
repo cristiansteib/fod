@@ -15,7 +15,7 @@ type
 
 
 archivoPersonas= file of personas;
-archivotexto = file of text;
+
 
 
 
