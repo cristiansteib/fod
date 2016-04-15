@@ -68,7 +68,6 @@ procedure cargar_c_cabecera(var archivo:archivoProducto);
 procedure recorrer(var archivo:archivoProducto ) ;
 	var
 		reg : producto;
-		
 	begin
 		reset (archivo);
 		leer (archivo, reg);
@@ -87,17 +86,9 @@ procedure alta(var archivo:archivoProducto);
 var 
 	reg :producto;
 	regNue :producto;
-	
 	begin
 		reset(archivo);
-		with regNue do begin
-			write('Nombre: ');read(nombre);
-			write('codigo: ');readln (codigo);
-			write('cantidad actual: ');readln (cantActual);
-			write('cantidad minima: ');readln (cantMinima);
-			write('cantidad maxima: ');readln (cantMax);
-			write('precio: ');readln (precio);
-		end;
+		cargar_registro(regNue);
 		read(archivo,reg);		
 		if (reg.codigo<=-1) then
 			begin
@@ -109,11 +100,13 @@ var
 				write(archivo,reg);		
 			end
 		else begin
-			seek(archivo,filesize(archivo));
-			write(archivo,regNue);
-			end;
-			close(archivo);
+				seek(archivo,filesize(archivo));
+				write(archivo,regNue);
+		end;
+		close(archivo);
 	end;
+	
+	
 	
 procedure borrado(var archivo:archivoProducto);
 	var
@@ -122,7 +115,6 @@ procedure borrado(var archivo:archivoProducto);
 
 	begin
 		reset(archivo);
-		
 		write('Ingrese codigo a borrar: '); readln(codigo);
 		leer (archivo,reg);
 		cabe:=reg;
@@ -153,13 +145,14 @@ var
 	while (reg.codigo <> regNue.codigo) do begin
 		leer (archivo,reg);
 		end;
+	
 	if reg.codigo <> valorAlto then begin
+		seek(archivo,filepos(archivo)-1);
 		write('Nombre: ');read(reg.nombre);
 		write('cantidad actual: ');readln (reg.cantActual);
 		write('cantidad minima: ');readln (reg.cantMinima);
 		write('cantidad maxima: ');readln (reg.cantMax);
 		write('precio: ');readln (reg.precio);
-		seek(archivo,filepos(archivo)-1);
 		write (archivo,reg);
 		end
 	else
