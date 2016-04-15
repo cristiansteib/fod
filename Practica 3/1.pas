@@ -30,31 +30,38 @@ procedure leer(var a:archivoProducto;var reg:producto);
 	end;
 
 
+procedure cargar_registro(var reg:producto);
+	begin
+		write('Nombre: ');readln(reg.nombre);
+		if reg.nombre<>'' then begin
+			write('codigo: ');readln (reg.codigo);
+			write('cantidad actual: ');readln (reg.cantActual);
+			write('cantidad minima: ');readln (reg.cantMinima);
+			write('cantidad maxima: ');readln (reg.cantMax);
+			write('precio: ');readln (reg.precio);
+			writeln();
+		end;
+	end;
+	
+
 
 procedure cargar_c_cabecera(var archivo:archivoProducto);
 	var
 	reg:producto;
 	begin		
 		reset(archivo);
-		with reg do begin 
-			codigo:=0;
-			write(archivo,reg);
-			write('Nombre: ');readln(nombre);readln(nombre);
-			while (nombre <> ' ') do 
-				begin
-				write('codigo: ');readln (codigo);
-				write('cantidad actual: ');readln (cantActual);
-				write('cantidad minima: ');readln (cantMinima);
-				write('cantidad maxima: ');readln (cantMax);
-				write('precio: ');readln (precio);
+		reg.codigo:=0;
+		write(archivo,reg);
+		readln();
+		cargar_registro(reg);
+		while (reg.nombre <> '') do 
+			begin
 				write(archivo,reg);
-				writeln();
-				write('Nombre: ');read(nombre);
-				end;
-		end;				
-
+				cargar_registro(reg);
+			end;
 		close (archivo);
 	end;
+
 
 
 
@@ -110,29 +117,24 @@ var
 	
 procedure borrado(var archivo:archivoProducto);
 	var
-		reg:producto;
+		reg,cabe:producto;
 		codigo:integer;
-		cabecera:integer;
+
 	begin
 		reset(archivo);
 		
 		write('Ingrese codigo a borrar: '); readln(codigo);
 		leer (archivo,reg);
-		cabecera:=reg.codigo;
+		cabe:=reg;
 		while (reg.codigo<>codigo) do begin leer(archivo,reg); end;
 		if reg.codigo<>valorAlto then begin
-			
 			seek(archivo,filepos(archivo)-1);
-			reg.codigo:=cabecera;
-			write(archivo,reg);
-			cabecera:=(filepos(archivo)-1)*-1;
-
-			seek(archivo,0);
-			leer (archivo,reg);
-			reg.codigo:=cabecera;
+			reg.codigo:=(filepos(archivo))*-1;
+			write(archivo,cabe);
 			seek(archivo,0);
 			write(archivo,reg);
-			end;
+			end
+		else writeln('no se encontro el archivo');
 		
 	end;
 
