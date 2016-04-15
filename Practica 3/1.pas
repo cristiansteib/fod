@@ -159,25 +159,17 @@ var
 		writeln('no se encontro el codigo');
 	end;
 	
-		
-
 			
-		
-var opcion : byte;
-fileName:string;
-archivo:archivoProducto;
+var 
+	opcion : byte;
+	fileName:string;
+	archivo:archivoProducto;
 
-
-
-
-
-BEGIN
-	
+BEGIN	
 	writeln('Menu:');
 	writeln('1 = Crear archivo y cargarlo.');
 	writeln('2 = Mantenimiento de archivo.');
 	writeln('3 = Recorrer archivo.');
-	
 	writeln();
 	opcion:=9;
 	while (opcion<>0) do begin
@@ -204,33 +196,17 @@ BEGIN
 				writeln('3= borrar dato');
 				write('Opcion : ');readln(opcion);
 				case opcion of 
-				
-					1:begin
-						alta(archivo);
-					end;
-					
-					2:begin
-						modificar(archivo);
-					end;
-					3:begin
-						borrado(archivo);
-					end;
-					
-					
-					
+					1:alta(archivo);
+					2:modificar(archivo);
+					3:borrado(archivo);
 				end;
-			
-			
 			end;
-			
 		3 : begin
-			clrscr;
-			writeln ('Ingrese nombre del archivo a recorrer: ');read(fileName);
-			assign(archivo,fileName);
-			recorrer(archivo);
-			end;
-			
-			
+				clrscr;
+				writeln ('Ingrese nombre del archivo a recorrer: ');read(fileName);
+				assign(archivo,fileName);
+				recorrer(archivo);
+			end;			
 	end;
 	readkey;
 	clrscr;
@@ -238,11 +214,7 @@ BEGIN
 	writeln('1 = Crear archivo y cargarlo.');
 	writeln('2 = Mantenimiento de archivo.');
 	writeln('3 = Recorrer archivo.');
-	
 	writeln();
-	
 	end;
-	
-	
 END.
 
