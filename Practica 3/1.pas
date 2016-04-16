@@ -69,7 +69,7 @@ procedure recorrer(var archivo:archivoProducto ) ;
 	var
 		reg : producto;
 	begin
-		reset (archivo);
+		rewrite (archivo);
 		leer (archivo, reg);
 		while (reg.codigo<>valorAlto) do 
 			begin
@@ -177,35 +177,33 @@ BEGIN
 	write('Opcion : ');readln(opcion);
 	case opcion of 
 		1 : begin
-				clrscr;
-				writeln ('Ingrese nombre del archivo: ');read(fileName);
-				assign(archivo,fileName);
-				rewrite(archivo);
-				close(archivo);
-				cargar_c_cabecera(archivo);
-			end;
+			clrscr;
+			writeln ('Ingrese nombre del archivo: ');read(fileName);
+			assign(archivo,fileName);
+			cargar_c_cabecera(archivo);
+		end;
 		2 : begin
-				clrscr;
-				writeln ('Ingrese nombre del archivo a abrir: ');read(fileName);
-				assign(archivo,fileName);
-				clrscr;
-				writeln();
-				writeln('Menu Mantenimiento: ');
-				writeln('1= alta');
-				writeln('2= modificar datos');
-				writeln('3= borrar dato');
-				write('Opcion : ');readln(opcion);
-				case opcion of 
-					1:alta(archivo);
-					2:modificar(archivo);
-					3:borrado(archivo);
-				end;
+			clrscr;
+			writeln ('Ingrese nombre del archivo a abrir: ');read(fileName);
+			assign(archivo,fileName);
+			clrscr;
+			writeln();
+			writeln('Menu Mantenimiento: ');
+			writeln('1= alta');
+			writeln('2= modificar datos');
+			writeln('3= borrar dato');
+			write('Opcion : ');readln(opcion);
+			case opcion of 
+				1:alta(archivo);
+				2:modificar(archivo);
+				3:borrado(archivo);
+			end;
 			end;
 		3 : begin
-				clrscr;
-				writeln ('Ingrese nombre del archivo a recorrer: ');read(fileName);
-				assign(archivo,fileName);
-				recorrer(archivo);
+			clrscr;
+			writeln ('Ingrese nombre del archivo a recorrer: ');read(fileName);
+			assign(archivo,fileName);
+			recorrer(archivo);
 			end;			
 	end;
 	readkey;
