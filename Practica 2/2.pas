@@ -1,5 +1,5 @@
 {
-   2-1.pas
+   2-2.pas
  Author=Cristian Steib
    
 }
@@ -64,6 +64,38 @@ procedure importarDet(var bin:archivoDetalle; var txt:text);
 		close(txt);
 	end;
 
+procedure exportarMae(var bin:archivoMaestro; var txt:text);
+	var reg:alumnoM;
+	begin
+		reset(bin); rewrite(txt);
+		read(bin,reg);
+		while (not eof(bin)) do begin
+			writeln(txt,reg.codigo);
+			writeln(txt,reg.nombre);
+			writeln(txt,reg.apellido);
+			writeln(txt,reg.materiasFinal);
+			writeln(txt,reg.materiasSinFinal);
+			read(bin,reg);
+		   end;
+		close(bin);
+		close(txt);
+	end;
+
+procedure exportarDet(var bin:archivoDetalle; var txt:text);
+	var reg:alumnoD;
+	begin
+		reset(bin); rewrite(txt);
+		read(bin,reg);
+		while (not eof(bin)) do begin
+			writeln(txt,reg.codigo);
+			writeln(txt,reg.materia);
+			writeln(txt,reg.conFinal);
+			read(bin,reg);
+		   end;
+		close(bin);
+		close(txt);
+	end;
+
 
 
 var
@@ -83,11 +115,13 @@ BEGIN
 		writeln('1) Crear Maestro a partir de alumnos.txt');
 		writeln('2) Crear Detalle a partir de detalle.txt');
 		writeln('3) Crear reporte del archivo maestro a reporteAlumnos.txt');
-		writeln('4) Crear reporte del archivo maestro a reporteAlumnos.txt');
+		writeln('4) Crear reporte del archivo detalle a reporteAlumnos.txt');
 		write('Ingrese N de opcion: ');readln(opcion);
 		case opcion of
 			1:importarMae(mae,maeTxt);
 			2:importarDet(det,detTxt);
+			3:exportarMae(mae,maeTxt);
+			4:exportarDet(det,detTxt);
 		 end;
 		clrscr; 
 	end;
