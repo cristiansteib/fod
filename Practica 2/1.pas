@@ -1,6 +1,8 @@
 {
    2-1.pas
  Author=Cristian Steib
+ COMPILA,PERO NO LO PROBE! 
+ 
    
 }
 
