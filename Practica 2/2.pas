@@ -1,6 +1,6 @@
 {
    2-2.pas
- Author=Cristian Steib
+ Author=Cristian   Steib
    
 }
 
