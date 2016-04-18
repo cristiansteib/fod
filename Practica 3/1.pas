@@ -49,7 +49,7 @@ procedure cargar_c_cabecera(var archivo:archivoProducto);
 	var
 	reg:producto;
 	begin		
-		reset(archivo);
+		rewrite(archivo);
 		reg.codigo:=0;
 		write(archivo,reg);
 		readln();
