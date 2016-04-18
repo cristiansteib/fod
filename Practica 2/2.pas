@@ -39,11 +39,9 @@ procedure importarMae(var bin:archivoMaestro; var txt:text);
 	begin
 		rewrite(bin); reset(txt);
 		while (not eof(txt)) do begin
-			readln(txt,reg.codigo);
 			readln(txt,reg.nombre);
 			readln(txt,reg.apellido);
-			readln(txt,reg.materiasFinal);
-			readln(txt,reg.materiasSinFinal);
+			readln(txt,reg.codigo,reg.materiasSinFinal, reg.materiasFinal);
 			write(bin,reg);
 		   end;
 		close(bin);
@@ -55,9 +53,7 @@ procedure importarDet(var bin:archivoDetalle; var txt:text);
 	begin
 		rewrite(bin); reset(txt);
 		while (not eof(txt)) do begin
-			readln(txt,reg.codigo);
-			readln(txt,reg.materia);
-			readln(txt,reg.conFinal);
+			readln(txt,reg.codigo, reg.materia ,reg.conFinal);
 			write(bin,reg);
 		   end;
 		close(bin);
@@ -68,14 +64,11 @@ procedure exportarMae(var bin:archivoMaestro; var txt:text);
 	var reg:alumnoM;
 	begin
 		reset(bin); rewrite(txt);
-		read(bin,reg);
 		while (not eof(bin)) do begin
-			writeln(txt,reg.codigo);
-			writeln(txt,reg.nombre);
-			writeln(txt,reg.apellido);
-			writeln(txt,reg.materiasFinal);
-			writeln(txt,reg.materiasSinFinal);
 			read(bin,reg);
+			Writeln(txt,reg.nombre);
+			Writeln(txt,reg.apellido);
+			Writeln(txt,reg.codigo,' ',reg.materiasSinFinal,' ',reg.materiasFinal);
 		   end;
 		close(bin);
 		close(txt);
@@ -85,12 +78,9 @@ procedure exportarDet(var bin:archivoDetalle; var txt:text);
 	var reg:alumnoD;
 	begin
 		reset(bin); rewrite(txt);
-		read(bin,reg);
 		while (not eof(bin)) do begin
-			writeln(txt,reg.codigo);
-			writeln(txt,reg.materia);
-			writeln(txt,reg.conFinal);
 			read(bin,reg);
+			writeln(txt,reg.codigo,' ', reg.materia,' ',reg.conFinal);
 		   end;
 		close(bin);
 		close(txt);
@@ -102,29 +92,31 @@ var
 	opcion:byte;
 	mae:archivoMaestro;
 	det:archivoDetalle;
-	detTxt:text;
-	maeTxt:text;
+	detTxt,	maeTxt:text;
+	txtReporteAlum,txtReporteDet:text;
 BEGIN
-	opcion:=99;
 	assign(mae,'maestro.bin');
 	assign(det,'detalle.bin');
 	assign(maeTxt,'alumnos.txt');
 	assign(detTxt,'detalle.txt');
-	while opcion<>0 do begin
+	assign(txtReporteAlum,'reporteAlumnos.txt');
+	assign(txtReporteDet,'reporteDetalle.txt');
+	
+	repeat
 		writeln ('Menu: ');
 		writeln('1) Crear Maestro a partir de alumnos.txt');
 		writeln('2) Crear Detalle a partir de detalle.txt');
 		writeln('3) Crear reporte del archivo maestro a reporteAlumnos.txt');
-		writeln('4) Crear reporte del archivo detalle a reporteAlumnos.txt');
-		write('Ingrese N de opcion: ');readln(opcion);
+		writeln('4) Crear reporte del archivo detalle a reporteDetalle.txt');
+		write('Ingrese N° de opcion: ');readln(opcion);
 		case opcion of
 			1:importarMae(mae,maeTxt);
 			2:importarDet(det,detTxt);
-			3:exportarMae(mae,maeTxt);
-			4:exportarDet(det,detTxt);
+			3:exportarMae(mae,txtReporteAlum);
+			4:exportarDet(det,txtReporteDet);
 		 end;
 		clrscr; 
-	end;
+	until opcion=0;
 	
 END.
 
