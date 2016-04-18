@@ -14,10 +14,9 @@ var
 	num:integer;
 begin
 	reset(archivo);
-	read(archivo,num);
 	while (NOT eof(archivo)) do begin
-		writeln(num);
 		read(archivo,num);
+		writeln(num);
 	end;
 	close(archivo);
 end;
