@@ -28,8 +28,8 @@ procedure importar (var bin:archivoMedicamentos;var txt:text);
 		rewrite(bin);
 		reset(txt);
 		while (not eof(txt)) do begin
-			readln(txt,reg.nombre);
-			readln(txt,reg.vencimiento,reg.stock,reg.presentacion);
+			readln(txt, reg.nombre);
+			readln(txt, reg.vencimiento, reg.stock, reg.presentacion);
 			write(bin,reg);
 		end;
 		close(bin);
@@ -95,13 +95,11 @@ procedure buscar_listar(var a:archivoMedicamentos);
 	reg:medicamentos;
 	begin
 		reset(a);
-		write('Ingrese comienzo de cadena a buscar');readln(nombre);
-		read(a,reg);
-		writeln();
+		write('Ingrese comienzo de cadena a buscar: ');readln(nombre);
 		while(not eof(a)) do begin
+			read(a,reg);
 			if coincide_palabra(nombre,reg.nombre) then 
 				writeln(reg.nombre);
-			read(a,reg);
 		end;
 	end;
 			
@@ -118,20 +116,25 @@ opcion:byte;
 BEGIN
 	write('Ingrese nombre del archivo binario: ');readln(fileName);
 	assign (aBinario,fileName);	
-	assign (aCarga,'carga.txt');
-	assign (aMedicamentos,'medicamentos.txt');
+	assign (aCarga,'Carga.txt');
+	assign (aMedicamentos,'Medicamentos.txt');
 	clrscr;
-	writeln ('1) Crear archivo binario desde carga.txt'); 
-	writeln ('2) Listar medicamentos con stock menor a 20'); 
-	writeln ('3) Buscar medicamentos que inicien con cierta palabra'); 
-	writeln ('4) Exportar archivo binario medicamentos a medicamentos.txt'); 
-	write (' Ingrese opcion: '); readln(opcion);
-	writeln();
-	case opcion of 
-		1:importar (aBinario,aCarga);
-		2:listar(aBinario);
-		3:buscar_listar(aBinario);
-		4:exportar (aBinario,aMedicamentos);
+	opcion:=99;
+	while opcion<> 0 do begin
+		writeln ('1) Crear archivo binario desde carga.txt'); 
+		writeln ('2) Listar medicamentos con stock menor a 20'); 
+		writeln ('3) Buscar medicamentos que inicien con cierta palabra'); 
+		writeln ('4) Exportar archivo binario medicamentos a medicamentos.txt'); 
+		writeln ('0) SALIR '); 
+		Writeln;
+		write (' Ingrese opcion: '); readln(opcion);
+		case opcion of 
+			1:importar (aBinario,aCarga);
+			2:listar(aBinario);
+			3:buscar_listar(aBinario);
+			4:exportar (aBinario,aMedicamentos);
+		end;
+		clrscr;
 	end;
 	
 			
