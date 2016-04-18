@@ -1,5 +1,7 @@
 {
    3.pas
+   * 
+   * no estoy seguro si es la manera de implementar la solucion.
    
     
 }
@@ -123,15 +125,14 @@ var
  
 mae:aMae;
 det1,det2,det3:aDet;
-
-regd1,regd2,regd3:pedido;
 regm:producto;
 
 BEGIN
-
-
-
-	
-	
+	Writeln('RESTAURANTES');
+	assign(det1,'detalle1.bin');
+	assign(det2,'detalle2.bin');
+	assign(det3,'detalle3.bin');
+	assign(mae,'maestro.bin');
+	actualizar_maestro(det1,det2,det3,mae);	
 END.
 
