@@ -118,7 +118,7 @@ procedure borrado(var archivo:archivoProducto);
 		write('Ingrese codigo a borrar: '); readln(codigo);
 		leer (archivo,reg);
 		cabe:=reg;
-		while (reg.codigo<>codigo) do begin leer(archivo,reg); end;
+		while (reg.codigo<>codigo) AND (reg.codigo<>valorAlto) do begin leer(archivo,reg); end;
 		if reg.codigo<>valorAlto then begin
 			seek(archivo,filepos(archivo)-1);
 			reg.codigo:=(filepos(archivo))*-1;
@@ -127,7 +127,7 @@ procedure borrado(var archivo:archivoProducto);
 			write(archivo,reg);
 			end
 		else writeln('no se encontro el archivo');
-		
+		close (archivo);
 	end;
 
 
@@ -142,7 +142,7 @@ var
 	clrscr;
 	writeln ('Codigo de producto a modificar: ');readln(regNue.codigo);
 	leer(archivo,reg);
-	while (reg.codigo <> regNue.codigo) do begin
+	while (reg.codigo <> regNue.codigo)AND (reg.codigo<>valorAlto) do begin
 		leer (archivo,reg);
 		end;
 	
@@ -157,6 +157,9 @@ var
 		end
 	else
 		writeln('no se encontro el codigo');
+	close(archivo);
+		
+	
 	end;
 	
 			
@@ -171,8 +174,7 @@ BEGIN
 	writeln('2 = Mantenimiento de archivo.');
 	writeln('3 = Recorrer archivo.');
 	writeln();
-	opcion:=9;
-	while (opcion<>0) do begin
+	repeat 
 	writeln();
 	write('Opcion : ');readln(opcion);
 	case opcion of 
@@ -213,6 +215,6 @@ BEGIN
 	writeln('2 = Mantenimiento de archivo.');
 	writeln('3 = Recorrer archivo.');
 	writeln();
-	end;
+	until opcion=0;
 END.
 
