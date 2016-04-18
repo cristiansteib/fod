@@ -26,13 +26,13 @@ type
 		
 archivoDetalle = file of alumnoD;
 archivoMaestro = file of alumnoM;
-{
-procedure leer (var a:archivoDetalle;var r:ventas);
+
+procedure leer (var a:archivoDetalle;var r:alumnoD);
 	begin
 		if (not eof(a)) then read(a,r)
 		else r.codigo:=valorAlto;
 	end;
-}
+
 
 procedure importarMae(var bin:archivoMaestro; var txt:text);
 	var reg:alumnoM;
@@ -87,6 +87,34 @@ procedure exportarDet(var bin:archivoDetalle; var txt:text);
 	end;
 
 
+procedure actualizar_maestro(var m:archivoMaestro ;var d:archivoDetalle );
+	var
+		regm:alumnoM;
+		regd:alumnoD;
+	begin
+		reset(m);reset(d);
+		leer (d,regd);
+		read(m,regm);
+		while regd.codigo<>valorAlto do begin   // se procesan todos los datos del detalle
+	
+	
+			while (regm.codigo<>regd.codigo ) do  // se recorre el maestro hasta encontrar el codigo
+				read(m,regm);
+			  			
+			if regd.conFinal>0 then           // se realiza la actualizacion 
+				regm.materiasFinal:=regm.materiasFinal+regd.conFinal
+			else if regd.materia>0 then
+				regm.materiasSinFinal:=regm.materiasSinFinal+regd.materia;
+				
+				
+			seek(m,filepos(m)-1);  //
+			write(m,regm);   	// se escriben los cambios
+			leer(d,regd);   // se lee el siguiente registro del detalle
+		end;					
+		
+		
+	end;
+
 
 var
 	opcion:byte;
@@ -108,12 +136,16 @@ BEGIN
 		writeln('2) Crear Detalle a partir de detalle.txt');
 		writeln('3) Crear reporte del archivo maestro a reporteAlumnos.txt');
 		writeln('4) Crear reporte del archivo detalle a reporteDetalle.txt');
+		writeln('5) Actualizar maestro');
+		writeln('0) SALIR');
+		Writeln;
 		write('Ingrese N° de opcion: ');readln(opcion);
 		case opcion of
 			1:importarMae(mae,maeTxt);
 			2:importarDet(det,detTxt);
 			3:exportarMae(mae,txtReporteAlum);
 			4:exportarDet(det,txtReporteDet);
+			5:actualizar_maestro(mae,det);
 		 end;
 		clrscr; 
 	until opcion=0;
