@@ -60,10 +60,9 @@ procedure listar(var a:archivoMedicamentos);
 	reg:medicamentos;
 	begin
 		reset(a);
-		read(a,reg);
 		while(not eof(a)) do begin
-			if reg.stock<20 then writeln(reg.nombre);
 			read(a,reg);
+			if reg.stock<20 then writeln(reg.nombre);
 		end;
 		close(a);
 	end;
