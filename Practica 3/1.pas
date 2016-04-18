@@ -69,7 +69,7 @@ procedure recorrer(var archivo:archivoProducto ) ;
 	var
 		reg : producto;
 	begin
-		rewrite (archivo);
+		reset (archivo);
 		leer (archivo, reg);
 		while (reg.codigo<>valorAlto) do 
 			begin
