@@ -55,15 +55,14 @@ procedure listar_datos(var archivo:archivoPersonas);
 		mes:integer;
 	begin
 		reset(archivo);
-		read(archivo,reg);
 		write('Listar personas del mes: '); readln(mes);
 		while (NOT eof(archivo)) do begin
+			read(archivo,reg);
 			if (((reg.fecha MOD 10000) DIV 100) = mes) then
 				write('CUMPLE CON MES : ')
 				else if (reg.fecha = 0 ) then 
 					write (' NO POSEE FECHA : ');
 			mostrar_reg(reg);
-			read(archivo,reg);
 		end;
 		close(archivo);
 	end;

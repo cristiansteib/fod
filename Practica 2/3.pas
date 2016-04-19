@@ -105,7 +105,6 @@ procedure actualizar_maestro(var adet1,adet2,adet3:aDet; var mae:Amae);
 				posR2:=filePos(adet2);
 				posR3:=filePos(adet3);
 				
-				regMae.stockActual:=regMae.stockActual-regMin.cantidad;
 				minimo(regDet1,regDet2,regDet3,adet1,adet2,adet3,regMin);
 								
 			end;
