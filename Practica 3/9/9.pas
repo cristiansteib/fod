@@ -1,4 +1,4 @@
-program sssd;
+program 9;
 uses crt;
 
 type
