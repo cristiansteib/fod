@@ -1,3 +1,5 @@
+{ AUN NO LO PROBE }
+
 program nueve;
 uses crt;
 const valorAlto=999;
@@ -41,9 +43,53 @@ procedure cargar_arreglo(var arreglo:valor_de_hora;var t:text);
 		close(t);
 	end;
 	
-procedure listar(var a:archivo;var arreglo:valor_de_hora);
 	
+procedure leer(var a:archivo;var reg:empleado);
 	begin
+		if not eof(a) then read(a,reg)
+		else reg.departamento:=valorAlto;
+	end;
+	
+	
+procedure listar(var a:archivo;var arreglo:valor_de_hora);
+	var
+		reg:empleado;
+		division,totHorasDivision:integer;
+		totMontoDivision,totMontoDepartamento:real;
+		departamento,totHorasDepartamento:integer;
+		importe:real;
+	begin
+		reset(a);
+		leer(a,reg);
+		while reg.departamento<> valorAlto do begin // se recorre todo el archivo
+			departamento:=reg.departamento;
+			totHorasDepartamento:=0;
+			totMontoDepartamento:=0;
+			Writeln('----------------------------------------------------------------------');
+			Writeln('DEPARTAMENTO ',departamento);
+			while ( (departamento=reg.departamento) AND (reg.departamento<>valorAlto) ) do begin
+				division:=reg.division;
+				totHorasDivision:=0;
+				totMontoDivision:=0;
+				Writeln('Division ',division);
+				
+				while ( (reg.division = division) AND (departamento=reg.departamento) AND (reg.departamento<>valorAlto) )  do begin
+					importe:=reg.cantidad_horas*arreglo[reg.categoria];
+					Writeln('Empleado: ',reg.numero_empleado:10,'Total de horas: ',reg.cantidad_horas:6,'Importe a cobrar: ',importe);
+					totHorasDivision:=totHorasDivision+reg.cantidad_horas;
+					totMontoDivision:=totMontoDivision+importe;
+				end;
+				Writeln('Total de horas division: ',totHorasDivision);
+				writeln('Monto total por division: ',totMontoDivision);
+				totHorasDepartamento:=totHorasDepartamento+totHorasDivision;
+				totMontoDepartamento:=totMontoDepartamento+totMontoDivision;
+			end;
+			Writeln;
+			Writeln('Total horas departamento: ',totHorasDepartamento);
+			Writeln('Monto total departamento: ',totMontoDepartamento);
+		end;
+		close(a);
+		
 	end;
 	
 	
