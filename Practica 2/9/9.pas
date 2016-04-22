@@ -1,5 +1,3 @@
-{ AUN NO LO PROBE }
-
 program nueve;
 uses crt;
 const valorAlto=999;
@@ -65,28 +63,36 @@ procedure listar(var a:archivo;var arreglo:valor_de_hora);
 			departamento:=reg.departamento;
 			totHorasDepartamento:=0;
 			totMontoDepartamento:=0;
-			Writeln('----------------------------------------------------------------------');
+			Writeln('------------------------------------------------------------------------------');
 			Writeln('DEPARTAMENTO ',departamento);
 			while ( (departamento=reg.departamento) AND (reg.departamento<>valorAlto) ) do begin
 				division:=reg.division;
 				totHorasDivision:=0;
 				totMontoDivision:=0;
+				Writeln;
 				Writeln('Division ',division);
 				
 				while ( (reg.division = division) AND (departamento=reg.departamento) AND (reg.departamento<>valorAlto) )  do begin
 					importe:=reg.cantidad_horas*arreglo[reg.categoria];
-					Writeln('Empleado: ',reg.numero_empleado:10,'Total de horas: ',reg.cantidad_horas:6,'Importe a cobrar: ',importe);
+					Writeln('Empleado: ',reg.numero_empleado:10,'      Total de horas: ',reg.cantidad_horas:6,'     Importe a cobrar: ',importe:2:2);
 					totHorasDivision:=totHorasDivision+reg.cantidad_horas;
 					totMontoDivision:=totMontoDivision+importe;
+					leer(a,reg);
 				end;
 				Writeln('Total de horas division: ',totHorasDivision);
-				writeln('Monto total por division: ',totMontoDivision);
+				writeln('Monto total por division: ',totMontoDivision:2:2);
 				totHorasDepartamento:=totHorasDepartamento+totHorasDivision;
 				totMontoDepartamento:=totMontoDepartamento+totMontoDivision;
 			end;
 			Writeln;
+			writeln;
+			Writeln('------------------------------------------------------------------------------');
+			writeln('______________________________________________________________________________');
 			Writeln('Total horas departamento: ',totHorasDepartamento);
-			Writeln('Monto total departamento: ',totMontoDepartamento);
+			Writeln('Monto total departamento: ',totMontoDepartamento:2:2);
+			Writeln('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+			writeln;
+			writeln;
 		end;
 		close(a);
 		
@@ -100,14 +106,14 @@ var
 	arch_empleado:archivo;
 	arreglo:valor_de_hora;
 begin
-	Write('Nombre del archivo array: ');readln(fileName);
+	Write('Nombre del archivo array txt: ');readln(fileName);
 	assign(arch_arreglo,fileName);
 	cargar_arreglo(arreglo,arch_arreglo);
 	
-	Write('Nombre del archivo empleado txt');readln(fileName);
+	Write('Nombre del archivo empleado txt: ');readln(fileName);
 	assign(text_arch_empleado,fileName);
 	assign(arch_empleado,'empleados.bin');
-	
+	importar(arch_empleado,text_arch_empleado);
 	listar(arch_empleado,arreglo);
 	
 	
