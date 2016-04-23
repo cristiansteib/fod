@@ -98,7 +98,7 @@ procedure actualizar_maestro(var mae:maestro;var det1,det2:detalle);
 			write(mae,regMae);
 	
 		end;
-		
+		close(mae);close(det1);close(det2);
 		
 	end;
 
