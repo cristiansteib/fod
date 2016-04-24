@@ -1,0 +1,5 @@
+1 30 arg
+20 la plata
+1 50 arg
+30 cordoba
+
