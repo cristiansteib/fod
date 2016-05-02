@@ -18,18 +18,22 @@ procedure insertar (var A:archivo; var elem:String);
   var 
     raiz,nodo_nuevo:nodo;
     pos_nuevo_nodo:integer;
-    encontre_padre:boolean;
+    encontre_padre,first:boolean;
   
   begin
 	reset(A);
+	
 	with nodo_nuevo do begin
 	  elemento:=elem;
 	  hIzq:=-1;
 	  hDer:=-1;
 	end;
 	
-	if Eof (A) then //arbol vacio
-	  Write(A,nodo_nuevo)
+	if Eof (A) then begin //arbol vacio
+	  Write(A,nodo_nuevo);
+	  encontre_padre:=true;
+	  first:=true;
+	  end
 	else 
 	  begin
 	  Read(A,raiz);
@@ -37,6 +41,7 @@ procedure insertar (var A:archivo; var elem:String);
 	  seek(A,pos_nuevo_nodo);
 	  write(A,nodo_nuevo);
 	  encontre_padre:=false;
+	  first:=false;
 	end;
 	  
 	//buscar al nuevo padre para agregar la referencia al nuevo nodo. 
@@ -66,17 +71,25 @@ procedure insertar (var A:archivo; var elem:String);
 			encontre_padre:=true;
 			end;
 		end;
-		
-	seek(A,filePos(A)-1);
-	write(A,raiz);
+	
+	if (not first) then begin
+	  seek(A,filePos(A)-1);
+	  write(A,raiz);
+	  end;
 	close(A);
 
   end;
-
-
+var 
+A:archivo;
+text:string;
 BEGIN
-
-
+assign (A,'TEST.bin');
+rewrite(A);
+close(A);
+text:='asdad';
+insertar(A,text);
+text:='r';
+insertar(A,text);
 	
 END.
 
